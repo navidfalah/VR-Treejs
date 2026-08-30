@@ -1,0 +1,485 @@
+.game-ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Top Bar */
+.top-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    pointer-events: none;
+}
+
+.game-controls,
+.level-selector {
+    pointer-events: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+}
+
+.game-stats {
+    display: flex;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.stat-item {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timer {
+    color: #4CAF50;
+    font-family: monospace;
+    font-size: 18px;
+}
+
+/* Level Selector (Updated) */
+.level-selector {
+    /* Position handled by top-bar flex layout */
+}
+
+.level-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.level-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.level-btn.active {
+    background: #4CAF50;
+    border-color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Pause Overlay */
+.pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    pointer-events: auto;
+}
+
+.pause-overlay h1 {
+    color: white;
+    font-size: 48px;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.resume-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+}
+
+.resume-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+}
+
+/* Side Guide */
+.side-guide {
+    position: absolute;
+    top: 80px;
+    /* Moved down to clear top bar */
+    right: 20px;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: auto;
+    transition: opacity 0.3s;
+}
+
+.guide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.guide-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #4CAF50;
+}
+
+.level-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.objective-container {
+    margin-bottom: 20px;
+}
+
+.objective-label {
+    display: block;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.objective-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.progress-section {
+    margin-bottom: 20px;
+}
+
+.progress-label {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4CAF50;
+    transition: width 0.3s ease;
+}
+
+.hints-section h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.hints-section ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+.hints-section li {
+    margin-bottom: 5px;
+}
+
+/* Tutorial Overlay */
+.tutorial-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+.tutorial-box {
+    background: #1a1a1a;
+    padding: 40px;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid #333;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.tutorial-intro {
+    color: #ccc;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.control-section h3 {
+    color: #4CAF50;
+    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.control-section p {
+    margin: 8px 0;
+    color: #ddd;
+    font-size: 14px;
+}
+
+kbd {
+    background: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border-bottom: 2px solid #111;
+    margin: 0 6px 0 0;
+    font-family: monospace;
+    font-size: 14px;
+    color: #fff;
+    display: inline-block;
+    min-width: 20px;
+    text-align: center;
+}
+
+.close-tutorial {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.1s;
+}
+
+.close-tutorial:hover {
+    transform: scale(1.05);
+}
+
+/* Progress Bar (Removed old centered one) */
+/* Removed old objective panel styles */
+
+/* Victory Screen */
+.victory-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    pointer-events: auto;
+}
+
+.victory-box {
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid #4CAF50;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.victory-box h1 {
+    color: #4CAF50;
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.victory-box p {
+    margin: 0 0 2rem 0;
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+.victory-stats {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #888;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.replay-button {
+    background: white;
+    color: black;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.replay-button:hover {
+    transform: scale(1.05);
+}
+
+/* Help Button */
+.help-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.2s;
+}
+
+.help-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
