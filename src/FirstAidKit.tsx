@@ -2,11 +2,11 @@ import { useStore } from './store';
 import { Box, RoundedBox } from '@react-three/drei';
 import { useState, useRef } from 'react';
 import { Group, MathUtils, DoubleSide } from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, type ThreeElements, type ThreeEvent } from '@react-three/fiber';
 import { Bandage } from './Bandage';
 
 // First Aid Kit that can be picked up from trunk
-export function FirstAidKit(props: any) {
+export function FirstAidKit(props: ThreeElements['group']) {
     const pickUpFirstAidKit = useStore((state) => state.pickUpFirstAidKit);
     const hasFirstAidKit = useStore((state) => state.hasFirstAidKit);
     const isFirstAidKitPlaced = useStore((state) => state.isFirstAidKitPlaced);
@@ -53,7 +53,7 @@ export function PlacedFirstAidKit() {
         return null;
     }
 
-    const handleClick = (e: any) => {
+    const handleClick = (e: ThreeEvent<PointerEvent>) => {
         e.stopPropagation();
         if (!isFirstAidKitOpen) {
             openFirstAidKit();

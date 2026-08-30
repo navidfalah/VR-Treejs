@@ -1,7 +1,7 @@
 import { Text, RoundedBox } from '@react-three/drei';
 import { useXRInputSourceState } from '@react-three/xr';
 import { useStore } from './store';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, type ReactNode } from 'react';
 import { Group, Vector3, Euler, Quaternion, DoubleSide } from 'three';
 import { useFrame } from '@react-three/fiber';
 
@@ -40,7 +40,17 @@ const dialogSteps = [
 
 // --- HELPER COMPONENTS ---
 
-function TouchableButton({ onClick, width, height, color, hoverColor, children, position }: any) {
+interface TouchableButtonProps {
+    onClick: () => void;
+    width: number;
+    height: number;
+    color: string;
+    hoverColor: string;
+    children?: ReactNode;
+    position: [number, number, number];
+}
+
+function TouchableButton({ onClick, width, height, color, hoverColor, children, position }: TouchableButtonProps) {
     const [hovered, setHovered] = useState(false);
     return (
         <group position={position} onClick={(e) => { e.stopPropagation(); onClick(); }}
@@ -61,6 +71,8 @@ function TouchableButton({ onClick, width, height, color, hoverColor, children, 
 
 function TypewriterText({ text, onComplete }: { text: string, onComplete?: () => void }) {
     const [displayedText, setDisplayedText] = useState("");
+    const onCompleteRef = useRef(onComplete);
+    onCompleteRef.current = onComplete;
 
     useEffect(() => {
         setDisplayedText("");
@@ -73,7 +85,7 @@ function TypewriterText({ text, onComplete }: { text: string, onComplete?: () =>
                 i++;
                 setTimeout(typeLoop, speed);
             } else {
-                if (onComplete) onComplete();
+                onCompleteRef.current?.();
             }
         };
         typeLoop();
@@ -202,6 +214,14 @@ function ChatScreen({ onHome }: { onHome: () => void }) {
 
     const initializedRef = useRef(false);
 
+    const addMessage = (sender: 'dispatcher' | 'user', text: string) => {
+        setMessages(prev => [...prev, { id: Date.now(), sender, text }]);
+        if (sender === 'dispatcher') {
+            setIsTyping(true);
+            setShowOptions(false);
+        }
+    };
+
     useEffect(() => {
         if (initializedRef.current) return;
 
@@ -215,14 +235,6 @@ function ChatScreen({ onHome }: { onHome: () => void }) {
             initializedRef.current = true;
         }
     }, [messages.length, emsCalled]);
-
-    const addMessage = (sender: 'dispatcher' | 'user', text: string) => {
-        setMessages(prev => [...prev, { id: Date.now(), sender, text }]);
-        if (sender === 'dispatcher') {
-            setIsTyping(true);
-            setShowOptions(false);
-        }
-    };
 
     const handleTypewriterComplete = () => {
         setIsTyping(false);
@@ -306,7 +318,6 @@ function ChatScreen({ onHome }: { onHome: () => void }) {
                     {currentStep.options.map((opt, i) => (
                         <TouchableButton
                             key={i}
-                            text={opt}
                             position={[0, -i * 0.022, 0]}
                             width={0.10} height={0.018}
                             color="#3498db" hoverColor="#2980b9"

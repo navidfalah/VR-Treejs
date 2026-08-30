@@ -4,7 +4,7 @@ import { FirstAidKit } from './FirstAidKit';
 import { WarningTriangle } from './WarningTriangle';
 import { useRef } from 'react';
 import { Group } from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, type ThreeElements } from '@react-three/fiber';
 import * as THREE from 'three';
 
 // Optimized wheel component
@@ -36,7 +36,7 @@ function Wheel({ position }: { position: [number, number, number] }) {
     );
 }
 
-export function HighFidelityCar(props: any) {
+export function HighFidelityCar(props: ThreeElements['group']) {
     const isTrunkOpen = useStore((state) => state.isTrunkOpen);
     const openTrunk = useStore((state) => state.openTrunk);
     const trunkRef = useRef<Group>(null);

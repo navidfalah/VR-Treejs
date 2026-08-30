@@ -18,6 +18,7 @@ import { TaskBillboard } from './TaskBillboard';
 import { VRPhone } from './VRPhone';
 import { PlacedFirstAidKit } from './FirstAidKit';
 import { BandagingSystem, DesktopBandaging } from './BandagingSystem';
+import type { ThreeEvent } from '@react-three/fiber';
 
 function BloodStain({ position }: { position: [number, number, number] }) {
     return (
@@ -43,7 +44,7 @@ function InteractiveGround() {
     const isFirstAidKitPlaced = useStore((state) => state.isFirstAidKitPlaced);
     const placeFirstAidKit = useStore((state) => state.placeFirstAidKit);
 
-    const handleGroundClick = (e: any) => {
+    const handleGroundClick = (e: ThreeEvent<MouseEvent>) => {
         e.stopPropagation();
         if (hasWarningTriangle) {
             placeTriangle(e.point);

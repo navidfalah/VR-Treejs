@@ -2,11 +2,11 @@ import { useStore } from './store';
 import { Sphere, Cylinder, Box } from '@react-three/drei';
 import { useRef, useState } from 'react';
 import { Group } from 'three';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, type ThreeElements } from '@react-three/fiber';
 import * as THREE from 'three';
 import { ParticleEffects } from './ParticleEffects';
 
-export function Person(props: any) {
+export function Person(props: ThreeElements['group']) {
     const hasBandage = useStore((state) => state.hasBandage);
     const isPersonHealed = useStore((state) => state.isPersonHealed);
     const checkBreathing = useStore((state) => state.checkBreathing);
@@ -27,8 +27,9 @@ export function Person(props: any) {
     const glowRef = useRef(0);
 
     useFrame((state) => {
-        if (groupRef.current && props.position) {
-            const personPos = new THREE.Vector3(...props.position);
+        if (groupRef.current && Array.isArray(props.position)) {
+            const [x, y, z] = props.position;
+            const personPos = new THREE.Vector3(x, y, z);
             const distance = playerPosition.distanceTo(personPos);
             setNearPerson(distance < 3);
         }

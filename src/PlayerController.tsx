@@ -132,12 +132,12 @@ export function PlayerController() {
             );
         };
 
-        let targetPos = camera.position.clone().add(finalMove);
+        const targetPos = camera.position.clone().add(finalMove);
 
         if (checkCollision(targetPos)) {
             // Collision detected, try sliding
             const currentPos = camera.position.clone();
-            let proposedPos = currentPos.clone();
+            const proposedPos = currentPos.clone();
 
             // Try X movement
             proposedPos.x += finalMove.x;

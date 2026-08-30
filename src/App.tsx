@@ -1,9 +1,10 @@
 import { Canvas } from '@react-three/fiber';
-import { Stats } from '@react-three/drei';
+import { Loader, Stats } from '@react-three/drei';
 import { XR, createXRStore } from '@react-three/xr';
 import React from 'react';
 import { GameScene } from './GameScene';
 import { GameUI } from './GameUI';
+import { ErrorBoundary } from './ErrorBoundary';
 
 const store = createXRStore({
   // Disable unsupported features to prevent warnings
@@ -49,21 +50,29 @@ function App() {
       {/* Game UI Overlay */}
       <GameUI />
 
-      <Canvas
-        camera={{ position: [0, 1.6, 8], fov: 75 }}
-        gl={{
-          antialias: true,
-          alpha: false,
-          powerPreference: 'high-performance',
-        }}
-      >
-        <Stats />
-        <XR store={store}>
-          <React.Suspense fallback={null}>
-            <GameScene />
-          </React.Suspense>
-        </XR>
-      </Canvas>
+      <Loader
+        containerStyles={{ background: 'rgba(10, 10, 10, 0.92)' }}
+        barStyles={{ background: '#4CAF50' }}
+        dataStyles={{ color: 'white', fontFamily: 'sans-serif' }}
+      />
+
+      <ErrorBoundary>
+        <Canvas
+          camera={{ position: [0, 1.6, 8], fov: 75 }}
+          gl={{
+            antialias: true,
+            alpha: false,
+            powerPreference: 'high-performance',
+          }}
+        >
+          {import.meta.env.DEV && <Stats />}
+          <XR store={store}>
+            <React.Suspense fallback={null}>
+              <GameScene />
+            </React.Suspense>
+          </XR>
+        </Canvas>
+      </ErrorBoundary>
     </>
   );
 }

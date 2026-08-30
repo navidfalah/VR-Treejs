@@ -1,6 +1,6 @@
 import { useStore } from './store';
 import { useState, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, type ThreeElements } from '@react-three/fiber';
 import { Group } from 'three';
 
 // Warning triangle prop - a reflective emergency triangle
@@ -126,7 +126,7 @@ export function WarningTriangleModel({ hovered }: { hovered?: boolean }) {
 }
 
 // Triangle in trunk - can be picked up
-export function WarningTriangle(props: any) {
+export function WarningTriangle(props: ThreeElements['group']) {
     const pickUpTriangle = useStore((state) => state.pickUpTriangle);
     const hasWarningTriangle = useStore((state) => state.hasWarningTriangle);
     const isTrianglePlaced = useStore((state) => state.isTrianglePlaced);

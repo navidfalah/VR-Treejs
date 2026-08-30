@@ -1,8 +1,8 @@
 import { useXRInputSourceState } from '@react-three/xr';
 import { useStore } from './store';
 import { Cylinder } from '@react-three/drei';
-import { useRef, useMemo } from 'react';
-import { Group, Vector3, BoxGeometry } from 'three';
+import { useRef } from 'react';
+import { Group, Vector3 } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { FirstAidKitModel } from './FirstAidKit';
 import { WarningTriangleModel } from './WarningTriangle';
@@ -40,8 +40,6 @@ export function VRHeldItems() {
     const isFirstAidKitPlaced = useStore((state) => state.isFirstAidKitPlaced);
     const hasBandage = useStore((state) => state.hasBandage);
     const armBandaged = useStore((state) => state.armBandaged);
-    const placeFirstAidKit = useStore((state) => state.placeFirstAidKit);
-    const playerPosition = useStore((state) => state.playerPosition);
 
     const groupRef = useRef<Group>(null);
 
@@ -71,13 +69,6 @@ export function VRHeldItems() {
             groupRef.current.position.add(offset);
         }
     });
-
-    // Handler to place first aid kit on ground (triggered by pinch in VR)
-    const handlePlaceKit = () => {
-        if (hasFirstAidKit && !isFirstAidKitPlaced) {
-            placeFirstAidKit(playerPosition.clone());
-        }
-    };
 
     // Determine what to show
     const showFirstAidKit = hasFirstAidKit && !isFirstAidKitPlaced;
